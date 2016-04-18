@@ -2,13 +2,13 @@ from math import log
 
 '''
 (data sample)
-dataset = [feat_vertor1, feat_vector2,...]
+dataset = [feat_vector1, feat_vector2,...]
 feat_vector1 = [1, 1, 'c1']
 feat_vector2 = [1, 0, 'c2']
 '''
 
 
-def calc_shannon_ent(dataset):
+def calc_shannon_entropy(dataset):
     label_counts = dict()
     for feat_vector in dataset:
         current_label = feat_vector[-1]
