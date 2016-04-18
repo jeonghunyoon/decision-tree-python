@@ -26,3 +26,7 @@ def split_by_feat_val(datasets, idx, val):
         if feat_vector[idx] is val:
             split_datasets.append(feat_vector)
     return split_datasets
+
+
+def choose_best_feat(datsets):
+    return " "
