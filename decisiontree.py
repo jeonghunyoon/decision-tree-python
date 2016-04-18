@@ -28,5 +28,20 @@ def split_by_feat_val(datasets, idx, val):
     return split_datasets
 
 
-def choose_best_feat(datsets):
-    return " "
+def choose_best_feat(datasets):
+    num_of_feat = len(datasets[0]) - 1
+    base_entropy = calc_shannon_entropy(datasets)
+    base_info_gain = 0.0
+    best_feat = -1
+    for i in range(num_of_feat):
+        feat_values = set([feat_vec[i] for feat_vec in datasets])
+        new_entropy = 0.0
+        for value in feat_values:
+            sub_datasets = split_by_feat_val(datasets, i, value)
+            prob = float(len(sub_datasets)) / len(datasets)
+            new_entropy += prob * calc_shannon_entropy(sub_datasets)
+        info_gain = base_entropy - new_entropy
+        if (info_gain > base_info_gain):
+            base_info_gain = info_gain
+            best_feat = i
+    return best_feat
