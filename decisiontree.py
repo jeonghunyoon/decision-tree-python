@@ -1,4 +1,5 @@
 from math import log
+import operator
 
 '''
 (data sample)
@@ -47,3 +48,11 @@ def choose_best_feat(datasets):
             base_info_gain = info_gain
             best_feat = i
     return best_feat
+
+
+def vote_majority(class_lists):
+    class_counts = dict()
+    for class_name in class_lists:
+        dict[class_name] = class_counts.get(class_name, 0) + 1
+    sorted_class_counts = sorted(class_counts.iteritems(), key=operator.itemgetter(1), reverse=True)
+    return sorted_class_counts[0][0]
