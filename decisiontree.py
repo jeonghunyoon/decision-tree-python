@@ -24,7 +24,9 @@ def split_by_feat_val(datasets, idx, val):
     split_datasets = []
     for feat_vector in datasets:
         if feat_vector[idx] is val:
-            split_datasets.append(feat_vector)
+            reduced_feat_vec = feat_vector[:idx]
+            reduced_feat_vec.extend(feat_vector[idx + 1:])
+            split_datasets.append(reduced_feat_vec)
     return split_datasets
 
 
