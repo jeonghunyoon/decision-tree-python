@@ -62,7 +62,7 @@ def vote_majority(class_lists):
 
 
 def create_tree(datasets, labels):
-    class_list = [data[-1] for data in datasets]
+    class_list = [feat_vec[-1] for feat_vec in datasets]
     if len(set(class_list)) is 1:
         return class_list[0]
     if len(datasets[0]) is 1:
@@ -71,7 +71,7 @@ def create_tree(datasets, labels):
     feat_choose = labels[idx_choose]
     del (labels[idx_choose])
     tree = {feat_choose: {}}
-    feat_val_list = set([data[idx_choose] for data in datasets])
+    feat_val_list = set([feat_vec[idx_choose] for feat_vec in datasets])
     for feat_val in feat_val_list:
         sub_labels = labels[:]
         tree[feat_choose][feat_val] = create_tree(split_by_feat_val(datasets, idx_choose, feat_val), sub_labels)
