@@ -6,6 +6,9 @@ import operator
 dataset = [feat_vector1, feat_vector2,...]
 feat_vector1 = [1, 1, 'c1']
 feat_vector2 = [1, 0, 'c2']
+You can try,
+datasets = [[1,1,'Fish'],[1,1,'Fish'],[1,0,'no Fish'],[0,1,'no Fish'],[0,1,'no Fish']]
+labels = ['no surfacing', 'flippers']
 '''
 
 
@@ -56,3 +59,20 @@ def vote_majority(class_lists):
         dict[class_name] = class_counts.get(class_name, 0) + 1
     sorted_class_counts = sorted(class_counts.iteritems(), key=operator.itemgetter(1), reverse=True)
     return sorted_class_counts[0][0]
+
+
+def create_tree(datasets, labels):
+    class_list = [data[-1] for data in datasets]
+    if len(set(class_list)) is 1:
+        return class_list[0]
+    if len(datasets[0]) is 1:
+        return vote_majority(class_list)
+    idx_choose = choose_best_feat(datasets)
+    feat_choose = labels[idx_choose]
+    del (labels[idx_choose])
+    tree = {feat_choose: {}}
+    feat_val_list = set([data[idx_choose] for data in datasets])
+    for feat_val in feat_val_list:
+        sub_labels = labels[:]
+        tree[feat_choose][feat_val] = create_tree(split_by_feat_val(datasets, idx_choose, feat_val), sub_labels)
+    return tree
