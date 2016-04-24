@@ -76,3 +76,21 @@ def create_tree(datasets, labels):
         sub_labels = labels[:]
         tree[feat_choose][feat_val] = create_tree(split_by_feat_val(datasets, idx_choose, feat_val), sub_labels)
     return tree
+
+
+'''
+test_vector : [1,0] or [1,1] like this
+'''
+
+
+def classify(tree, labels, test_vector):
+    feature = tree.keys()[0]
+    feature_idx = labels.index(feature)
+    child_dict = tree[feature]
+    for feat_val in child_dict.keys():
+        if test_vector[feature_idx] == feat_val:
+            if type(child_dict[feat_val]).__name__ == 'dict':
+                class_label = classify(child_dict[feat_val], labels, test_vector)
+            else:
+                class_label = child_dict[feat_val]
+    return class_label
